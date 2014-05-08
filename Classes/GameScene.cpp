@@ -150,23 +150,45 @@ void GameScene::createCardSprite(Size size)
 void GameScene::createCardNumber()
 {
 
-    int i = CCRANDOM_0_1() * 4;        //生成0~3随机数
-    int j = CCRANDOM_0_1() * 4;
-    
-    //判断是否已经存在
-    if (cardArr[i][j]->getNumber() > 0)
-    {
-        createCardNumber();
-    }
-    else
-    {
-        //2和4的生成率为9:1
-        cardArr[i][j]->setNumber(CCRANDOM_0_1()*10 < 1 ? 4 : 2);
+    while (1) {
+        int i = CCRANDOM_0_1() * 4;        //生成0~3随机数
+        int j = CCRANDOM_0_1() * 4;
+        
+        log("[%d][%d]",i,j);
+        
+        if (cardArr[i][j]->getNumber() == 0)
+        {
+            //2和4的生成率为9:1
+            cardArr[i][j]->setNumber(CCRANDOM_0_1()*10 < 1 ? 4 : 2);
+            break;
+        }
+        
+        if (!shouldCreateCardNumber()) {
+            break;
+        }
     }
 }
 
+bool GameScene::shouldCreateCardNumber()
+{
+    bool isCreate = false;
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            if( 0 == cardArr[i][j]->getNumber() )
+            {
+                isCreate = true;
+                break;
+            }
+        }
+    }
+    
+    return isCreate;
+}
+
 //左滑动
-void GameScene::doLeft()
+bool GameScene::doLeft()
 {
     //判断有没有发生移动
     bool isMove = false;
@@ -200,11 +222,11 @@ void GameScene::doLeft()
         }
     }
     
-    //return isMove;
+    return isMove;
 }
 
 //右滑动
-void GameScene::doRight()
+bool GameScene::doRight()
 {
     //判断有没有发生移动
     bool isMove = false;
@@ -237,11 +259,11 @@ void GameScene::doRight()
         }
     }
     
-    //return isMove;
+    return isMove;
 }
 
 //上滑动
-void GameScene::doUp()
+bool GameScene::doUp()
 {
     //判断有没有发生移动
     bool isMove = false;
@@ -274,11 +296,11 @@ void GameScene::doUp()
         }
     }
     
-    //return isMove;
+    return isMove;
 }
 
 //下滑动
-void GameScene::doDown()
+bool GameScene::doDown()
 {
     //判断有没有发生移动
     bool isMove = false;
@@ -311,7 +333,7 @@ void GameScene::doDown()
         }
     }
     
-    //return isMove;
+    return isMove;
 }
 
 void GameScene::setScore(int score)
@@ -322,7 +344,7 @@ void GameScene::setScore(int score)
 void GameScene::doCheck()
 {
     bool isGameOver = true;
-    bool isCreateNumber = true;
+
     //结束边界  4*4的card数值>0 且  相邻card没有相同数值
     //4*4的card数值>0 不能在创建Number
     //判断每一个的上下左右和自己是否相同
@@ -337,19 +359,12 @@ void GameScene::doCheck()
                 (y>0 && cardArr[x][y]->getNumber() == cardArr[x][y-1]->getNumber()) )
             {
                 isGameOver = false;
-                
-            }
-            
-            if (cardArr[x][y]->getNumber()  == 0) {
-                isCreateNumber = true;
             }
         }
     }
 
     if (isGameOver)
     {
-        //重来
-        //Director::getInstance()->replaceScene(TransitionFade::create(1, GameScene::createScene()));
         log("game over");
         
         GameOverLayer *gameoverLayer = GameOverLayer::create(Color4B(0, 0, 0, 180));
@@ -359,10 +374,11 @@ void GameScene::doCheck()
     }
     else
     {
-        if (isCreateNumber) {
+        if (shouldCreateCardNumber()) {
             createCardNumber();
         }
     }
+    
 }
 
 void GameScene::newNumber(int i, int j, int num)

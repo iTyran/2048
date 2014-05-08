@@ -35,19 +35,20 @@ private:
     void newNumber(int i, int j, int num);
     void setScore(int score);
     void doCheck();
+    bool shouldCreateCardNumber();
 
     
     cocos2d::Point getPosition(int i, int j);
     
     /////////////////
     //左滑动
-    void doLeft();
+    bool doLeft();
     //右滑动
-    void doRight();
+    bool doRight();
     //上滑动
-    void doUp();
+    bool doUp();
     //下滑动
-    void doDown();
+    bool doDown();
 
 private:
 

@@ -17,7 +17,7 @@ public:
     static CardSprite* createCardSprite(int number, int wight, int height, float CardSpriteX, float CardSpriteY);
 	virtual bool init();
 	CREATE_FUNC(CardSprite);
-    
+    ~CardSprite();
     int getNumber();
     void setNumber(int num);
 private:

@@ -25,6 +25,11 @@ CardSprite* CardSprite::createCardSprite(int number, int wight, int height, floa
 	return NULL;
 }
 
+CardSprite::~CardSprite()
+{
+    
+}
+
 //这里也是规范化
 bool CardSprite::init()
 {
