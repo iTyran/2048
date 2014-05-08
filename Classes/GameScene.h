@@ -42,6 +42,8 @@ private:
     
     void saveStatus();
     void resumeStatus();
+    
+    void onPause(Ref* pSender);
 
     
     cocos2d::Point getPosition(int i, int j);

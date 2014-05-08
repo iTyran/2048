@@ -11,6 +11,7 @@
 #include "SimpleRecognizer.h"
 #include "GameOverLayer.h"
 #include "HighScore.h"
+#include "PopLayer.h"
 
 USING_NS_CC;
 
@@ -51,14 +52,25 @@ bool GameScene::init()
     auto layerColorBG = LayerColor::create(Color4B(180, 170, 160, 255));
     this->addChild(layerColorBG);
     
+
+    //pause
+    MenuItemFont::setFontName("Consolas");
+    MenuItemFont::setFontSize(80);
+    auto menuItemPause = MenuItemFont::create("PAUSE", CC_CALLBACK_1(GameScene::onPause, this));
+    
+    
+    auto menu = Menu::create(menuItemPause, NULL);
+    addChild(menu);
+    menu->setPosition(Point(visibleSize.width - 150, visibleSize.height/2 + 250));
+    
     //创建分数
     auto cardNumberTitle = Label::createWithSystemFont("SCORE","Consolas",80);
-    cardNumberTitle->setPosition(Point(visibleSize.width/2 + 340, visibleSize.height/2 + 130));
+    cardNumberTitle->setPosition(Point(visibleSize.width - 150, visibleSize.height/2 + 50));
     addChild(cardNumberTitle);
     
     score = 0;
     cardNumberTTF = Label::createWithSystemFont("0", "Consolas", 70);
-    cardNumberTTF->setPosition(Point(visibleSize.width/2 + 340, visibleSize.height/2 - 100));
+    cardNumberTTF->setPosition(Point(visibleSize.width - 150, visibleSize.height/2 - 50));
     addChild(cardNumberTTF);
     
     //设置触摸事件监听
@@ -85,10 +97,12 @@ bool GameScene::init()
     return true;
 }
 
-//void GameScene::onEnter()
-//{
-//
-//}
+void GameScene::onPause(Ref* pSender)
+{
+    PopLayer *poplayer = PopLayer::create(Color4B(0,0,0,180));
+    addChild(poplayer);
+    Director::getInstance()->pause();
+}
 
 bool GameScene::onTouchBegan(Touch* touch, Event* event)
 {

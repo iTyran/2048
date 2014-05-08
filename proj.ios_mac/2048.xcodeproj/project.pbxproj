@@ -25,6 +25,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2880EC4A191B27E6009FC0D1 /* GameOverLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2880EC48191B27E6009FC0D1 /* GameOverLayer.cpp */; };
 		2880EC50191B5C6C009FC0D1 /* HighScore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2880EC4E191B5C6C009FC0D1 /* HighScore.cpp */; };
+		2880EC55191B76AF009FC0D1 /* PopLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2880EC53191B76AF009FC0D1 /* PopLayer.cpp */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		28B21C471919DB7B007D0F34 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28B21C451919DB7B007D0F34 /* GameScene.cpp */; };
 		28B21C4C191A03C1007D0F34 /* main.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28B21C4A191A03C1007D0F34 /* main.plist */; };
@@ -234,6 +235,8 @@
 		2880EC49191B27E6009FC0D1 /* GameOverLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameOverLayer.h; path = ../Classes/GameOverLayer.h; sourceTree = "<group>"; };
 		2880EC4E191B5C6C009FC0D1 /* HighScore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HighScore.cpp; path = ../Classes/HighScore.cpp; sourceTree = "<group>"; };
 		2880EC4F191B5C6C009FC0D1 /* HighScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HighScore.h; path = ../Classes/HighScore.h; sourceTree = "<group>"; };
+		2880EC53191B76AF009FC0D1 /* PopLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PopLayer.cpp; path = ../Classes/PopLayer.cpp; sourceTree = "<group>"; };
+		2880EC54191B76AF009FC0D1 /* PopLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopLayer.h; path = ../Classes/PopLayer.h; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28B21C451919DB7B007D0F34 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameScene.cpp; path = ../Classes/GameScene.cpp; sourceTree = "<group>"; };
 		28B21C461919DB7B007D0F34 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = ../Classes/GameScene.h; sourceTree = "<group>"; };
@@ -363,6 +366,8 @@
 				2880EC49191B27E6009FC0D1 /* GameOverLayer.h */,
 				2880EC4E191B5C6C009FC0D1 /* HighScore.cpp */,
 				2880EC4F191B5C6C009FC0D1 /* HighScore.h */,
+				2880EC53191B76AF009FC0D1 /* PopLayer.cpp */,
+				2880EC54191B76AF009FC0D1 /* PopLayer.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -697,6 +702,7 @@
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
+				2880EC55191B76AF009FC0D1 /* PopLayer.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				28B21C471919DB7B007D0F34 /* GameScene.cpp in Sources */,
 				2880EC50191B5C6C009FC0D1 /* HighScore.cpp in Sources */,
