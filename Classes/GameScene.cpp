@@ -213,6 +213,24 @@ bool GameScene::shouldCreateCardNumber()
     return isCreate;
 }
 
+bool GameScene::isWin()
+{
+    bool win = false;
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            if( 2048 == cardArr[i][j]->getNumber() )
+            {
+                win = true;
+                break;
+            }
+        }
+    }
+    
+    return win;
+}
+
 //左滑动
 bool GameScene::doLeft()
 {
@@ -388,6 +406,22 @@ void GameScene::doCheck()
             }
         }
     }
+
+    if (isWin()) {
+        
+        successLayer = LayerColor::create(Color4B(0, 0, 0, 180));
+        Size winSize = Director::getInstance()->getWinSize();
+        Point centerPos = Point(winSize.width / 2, winSize.height / 2);
+        auto gameOverTitle = Label::createWithSystemFont("YOU WIN","Consolas",80);
+        gameOverTitle->setPosition(centerPos);
+        successLayer->addChild(gameOverTitle);
+        
+        addChild(successLayer,1);
+        
+        scheduleOnce(SEL_SCHEDULE(&GameScene::removeSuccessLayer), 2);
+        return;
+    }
+    
     //isGameOver = true;
     if (isGameOver)
     {
@@ -464,4 +498,9 @@ void GameScene::resumeStatus()
     setScore(score);
     
     UserDefault::getInstance()->setBoolForKey("history", false);
+}
+
+void GameScene::removeSuccessLayer()
+{
+    successLayer->removeFromParent();
 }

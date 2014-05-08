@@ -26,7 +26,7 @@ GameOverLayer* GameOverLayer::create(const Color4B& color)
 
 bool GameOverLayer::initWithColor(const Color4B& color)
 {
-    if (!CCLayerColor::initWithColor(color)) {
+    if (!LayerColor::initWithColor(color)) {
         return false;
     }
     

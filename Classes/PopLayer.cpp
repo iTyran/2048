@@ -24,7 +24,7 @@ PopLayer* PopLayer::create(const Color4B& color)
 
 bool PopLayer::initWithColor(const Color4B& color)
 {
-    if (!CCLayerColor::initWithColor(color)) {
+    if (!LayerColor::initWithColor(color)) {
         return false;
     }
     

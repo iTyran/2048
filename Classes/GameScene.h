@@ -39,6 +39,9 @@ private:
     void setScore(int score);
     void doCheck();
     bool shouldCreateCardNumber();
+
+    bool isWin();
+    void removeSuccessLayer();
     
     void saveStatus();
     void resumeStatus();
@@ -72,6 +75,8 @@ private:
     CardSprite *cardArr[4][4];
 
     SimpleRecognizer *recognizer;
+    
+    cocos2d::LayerColor *successLayer;
 };
 
 #endif /* defined(___048__GameScene__) */
