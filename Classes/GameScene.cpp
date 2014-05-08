@@ -98,25 +98,21 @@ void GameScene::onTouchEnded(Touch* touch, Event* event)
     switch (rtn) {
         case SimpleGesturesLeft:
             doLeft();
-            createCardNumber();
             doCheck();
             setScore(score);
             break;
         case SimpleGesturesRight:
             doRight();
-            createCardNumber();
             doCheck();
             setScore(score);
             break;
         case SimpleGesturesUp:
             doUp();
-            createCardNumber();
             doCheck();
             setScore(score);
             break;
         case SimpleGesturesDown:
             doDown();
-            createCardNumber();
             doCheck();
             setScore(score);
             break;
@@ -152,6 +148,7 @@ void GameScene::createCardSprite(Size size)
 //创建生成随机卡片
 void GameScene::createCardNumber()
 {
+
     int i = CCRANDOM_0_1() * 4;        //生成0~3随机数
     int j = CCRANDOM_0_1() * 4;
     
@@ -324,6 +321,9 @@ void GameScene::setScore(int score)
 void GameScene::doCheck()
 {
     bool isGameOver = true;
+    bool isCreateNumber = true;
+    //结束边界  4*4的card数值>0 且  相邻card没有相同数值
+    //4*4的card数值>0 不能在创建Number
     //判断每一个的上下左右和自己是否相同
     for (int y = 0; y < 4; y++)
     {
@@ -336,13 +336,25 @@ void GameScene::doCheck()
                 (y>0 && cardArr[x][y]->getNumber() == cardArr[x][y-1]->getNumber()) )
             {
                 isGameOver = false;
+                
+            }
+            
+            if (cardArr[x][y]->getNumber()  == 0) {
+                isCreateNumber = true;
             }
         }
     }
     if (isGameOver)
     {
         //重来
-        Director::getInstance()->replaceScene(TransitionFade::create(1, GameScene::createScene()));
+        //Director::getInstance()->replaceScene(TransitionFade::create(1, GameScene::createScene()));
+        log("game over");
+    }
+    else
+    {
+        if (isCreateNumber) {
+            createCardNumber();
+        }
     }
 }
 
