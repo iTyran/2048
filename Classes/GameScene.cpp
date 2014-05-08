@@ -70,16 +70,25 @@ bool GameScene::init()
     
     //创建4X4卡片
     createCardSprite(visibleSize);
-    
-    //初始时生成两个2
-    createCardNumber();
-    createCardNumber();
-    
+    if (UserDefault::getInstance()->getBoolForKey("history")) {
+        resumeStatus();
+    }
+    else
+    {
+        //初始时生成两个2
+        createCardNumber();
+        createCardNumber();
+    }
     
     recognizer = new SimpleRecognizer();
     
     return true;
 }
+
+//void GameScene::onEnter()
+//{
+//
+//}
 
 bool GameScene::onTouchBegan(Touch* touch, Event* event)
 {
@@ -365,11 +374,12 @@ void GameScene::doCheck()
             }
         }
     }
-    isGameOver = true;
+    //isGameOver = true;
     if (isGameOver)
     {
         log("game over");
-        
+        UserDefault::getInstance()->setBoolForKey("history", false);
+
         HighScore::getInstance()->setScore(score);
         GameOverLayer *gameoverLayer = GameOverLayer::create(Color4B(0, 0, 0, 180));
         addChild(gameoverLayer,1);
@@ -380,6 +390,8 @@ void GameScene::doCheck()
     {
         if (shouldCreateCardNumber()) {
             createCardNumber();
+            
+            saveStatus();
         }
     }
     
@@ -401,4 +413,41 @@ Point GameScene::getPosition(int i, int j)
     float pY = cellSize/2 + j*(cellSize+cellSpace);
     
     return Point(pX,pY);
+}
+
+
+void GameScene::saveStatus()
+{
+    char temp[10];
+    //4*4
+    for (int i = 0; i<4; i++) {
+        for(int j = 0; j<4; j++)
+        {
+            sprintf(temp,"%d%d",i,j);
+            UserDefault::getInstance()->setIntegerForKey(temp, cardArr[i][j]->getNumber());
+        }
+    }
+    
+    UserDefault::getInstance()->setIntegerForKey("score", score);
+    
+    UserDefault::getInstance()->setBoolForKey("history", true);
+}
+
+void GameScene::resumeStatus()
+{
+    char temp[10];
+    //4*4
+    for (int i = 0; i<4; i++) {
+        for(int j = 0; j<4; j++)
+        {
+            sprintf(temp,"%d%d",i,j);
+            int number = UserDefault::getInstance()->getIntegerForKey(temp);
+            cardArr[i][j]->setNumber(number);
+        }
+    }
+    
+    score = UserDefault::getInstance()->getIntegerForKey("score");
+    setScore(score);
+    
+    UserDefault::getInstance()->setBoolForKey("history", false);
 }

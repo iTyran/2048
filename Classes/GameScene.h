@@ -28,6 +28,9 @@ public:
     virtual void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
 	virtual void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
     
+    
+    //virtual void onEnter() override;
+    
 private:
     
     void createCardSprite(cocos2d::Size size);
@@ -36,6 +39,9 @@ private:
     void setScore(int score);
     void doCheck();
     bool shouldCreateCardNumber();
+    
+    void saveStatus();
+    void resumeStatus();
 
     
     cocos2d::Point getPosition(int i, int j);
