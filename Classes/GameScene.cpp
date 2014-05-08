@@ -10,6 +10,7 @@
 #include "Card.h"
 #include "SimpleRecognizer.h"
 #include "GameOverLayer.h"
+#include "HighScore.h"
 
 USING_NS_CC;
 
@@ -31,6 +32,8 @@ Scene* GameScene::createScene()
 GameScene::~GameScene()
 {
     delete recognizer;
+    
+    HighScore::destroyInstance();
 }
 
 // on "init" you need to initialize your instance
@@ -362,11 +365,12 @@ void GameScene::doCheck()
             }
         }
     }
-
+    isGameOver = true;
     if (isGameOver)
     {
         log("game over");
         
+        HighScore::getInstance()->setScore(score);
         GameOverLayer *gameoverLayer = GameOverLayer::create(Color4B(0, 0, 0, 180));
         addChild(gameoverLayer,1);
         

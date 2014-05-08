@@ -10,6 +10,7 @@
 
 #include "GameOverLayer.h"
 #include "GameScene.h"
+#include "HighScore.h"
 
 GameOverLayer* GameOverLayer::create(const Color4B& color)
 {
@@ -32,18 +33,30 @@ bool GameOverLayer::initWithColor(const Color4B& color)
     Size winSize = Director::getInstance()->getWinSize();
     Point centerPos = Point(winSize.width / 2, winSize.height / 2);
     
-    auto gameOverTitle = Label::createWithSystemFont("Game Over!","Consolas",80);
+    auto gameOverTitle = Label::createWithSystemFont("GAME OVER","Consolas",80);
     gameOverTitle->setPosition(Point(centerPos.x, centerPos.y + 150));
     addChild(gameOverTitle);
     
+    char score[64];
+    sprintf(score, "%d", HighScore::getInstance()->getScore());
+    auto scoreTitle = Label::createWithSystemFont(score,"Consolas",60);
+    scoreTitle->setPosition(Point(centerPos.x, centerPos.y + 50));
+    addChild(scoreTitle);
+    
+    char temp[64];
+    sprintf(temp, "BEST:%d", HighScore::getInstance()->getHighScore());
+    auto highScoreTitle = Label::createWithSystemFont(temp,"Consolas",40);
+    highScoreTitle->setPosition(Point(centerPos.x, centerPos.y - 50));
+    addChild(highScoreTitle);
+    
     MenuItemFont::setFontName("Consolas");
     MenuItemFont::setFontSize(80);
-    auto menuItemRestart = MenuItemFont::create("restart", CC_CALLBACK_1(GameOverLayer::onRestart, this));
+    auto menuItemRestart = MenuItemFont::create("RESTART", CC_CALLBACK_1(GameOverLayer::onRestart, this));
 
     
     auto menu = Menu::create(menuItemRestart, NULL);
     addChild(menu);
-    menu->setPosition(centerPos);
+    menu->setPosition(Point(centerPos.x, centerPos.y - 150));
     
 
     //设置触摸事件监听
