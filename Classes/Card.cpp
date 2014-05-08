@@ -20,7 +20,7 @@ CardSprite* CardSprite::createCardSprite(int number, int wight, int height, floa
 		card->initCard(number,wight,height,CardSpriteX,CardSpriteY);
 		return card;
 	}
-	//CC_SAFE_DELETE(card);
+	CC_SAFE_DELETE(card);
     
 	return NULL;
 }

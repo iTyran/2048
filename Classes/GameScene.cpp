@@ -9,6 +9,7 @@
 #include "GameScene.h"
 #include "Card.h"
 #include "SimpleRecognizer.h"
+#include "GameOverLayer.h"
 
 USING_NS_CC;
 
@@ -344,11 +345,17 @@ void GameScene::doCheck()
             }
         }
     }
+
     if (isGameOver)
     {
         //重来
         //Director::getInstance()->replaceScene(TransitionFade::create(1, GameScene::createScene()));
         log("game over");
+        
+        GameOverLayer *gameoverLayer = GameOverLayer::create(Color4B(0, 0, 0, 180));
+        addChild(gameoverLayer,1);
+        
+        Director::getInstance()->pause();
     }
     else
     {
