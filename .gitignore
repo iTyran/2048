@@ -8,4 +8,5 @@ project.xcworkspace
 *.xcworkspace
 *.xcuserdata
 xcuserdata
-
+proj.android/libs/
+proj.android/obj/
