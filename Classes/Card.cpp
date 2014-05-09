@@ -10,14 +10,14 @@
 
 USING_NS_CC;
 
-CardSprite* CardSprite::createCardSprite(int number, int wight, int height, float CardSpriteX, float CardSpriteY)
+CardSprite* CardSprite::createCardSprite(int number, int wight, int height, Point position)
 {
 	//这里是创建一个自定义精灵类，格式很规范化
 	CardSprite *card = new CardSprite();
 	if (card && card->init())
 	{
 		card->autorelease();
-		card->initCard(number,wight,height,CardSpriteX,CardSpriteY);
+		card->initCard(number,wight,height,position);
 		return card;
 	}
 	CC_SAFE_DELETE(card);
@@ -39,6 +39,12 @@ bool CardSprite::init()
 	}
     
 	return true;
+}
+
+void CardSprite::runNewNumberAction()
+{
+    auto action = ScaleBy::create(0.05,0.99);
+    runAction(Sequence::create(action, action->reverse(), nullptr));
 }
 
 //获取数据
@@ -119,13 +125,13 @@ void CardSprite::setNumber(int num)
 }
 
 //初始化
-void CardSprite::initCard(int number, int wight, int height, float CardSpriteX, float CardSpriteY)
+void CardSprite::initCard(int number, int wight, int height, Point position)
 {
 	//初始化数字
 	this->number = number;
 	//加入卡片背景颜色
 	colorBackground = LayerColor::create(Color4B(200,190,180,255),wight-15,height-15);
-	colorBackground->setPosition(Point(CardSpriteX,CardSpriteY));
+	colorBackground->setPosition(position);
     
 	//判断如果大于0就显示，否则就不显示
 	if (number > 0)

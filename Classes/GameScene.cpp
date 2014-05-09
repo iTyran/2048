@@ -61,16 +61,16 @@ bool GameScene::init()
     
     auto menu = Menu::create(menuItemPause, NULL);
     addChild(menu);
-    menu->setPosition(Point(visibleSize.width - 150, visibleSize.height/2 + 250));
+    menu->setPosition(Point(200, visibleSize.height - 200));
     
     //创建分数
     auto cardNumberTitle = Label::createWithSystemFont("SCORE","Consolas",80);
-    cardNumberTitle->setPosition(Point(visibleSize.width - 150, visibleSize.height/2 + 50));
+    cardNumberTitle->setPosition(Point(200, visibleSize.height - 100));
     addChild(cardNumberTitle);
     
     score = 0;
     cardNumberTTF = Label::createWithSystemFont("0", "Consolas", 70);
-    cardNumberTTF->setPosition(Point(visibleSize.width - 150, visibleSize.height/2 - 50));
+    cardNumberTTF->setPosition(Point(400, visibleSize.height - 100));
     addChild(cardNumberTTF);
     
     //设置触摸事件监听
@@ -88,8 +88,8 @@ bool GameScene::init()
     else
     {
         //初始时生成两个2
-        createCardNumber();
-        createCardNumber();
+        createCardNumber(false);
+        createCardNumber(false);
     }
     
     recognizer = new SimpleRecognizer();
@@ -158,14 +158,17 @@ void GameScene::onTouchEnded(Touch* touch, Event* event)
 void GameScene::createCardSprite(Size size)
 {
     //求出单元格的宽和高
-    int cardSize = (size.height - 36) / 4;
+    //左右边距 cellSpace
+    cellSize = (size.width - 3*cellSpace - 40)/4;
+    
+    
     //绘制出4X4的单元格
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
         {
             //需要屏幕分辨率适配
-            CardSprite *card = CardSprite::createCardSprite(0, cardSize, cardSize, cardSize*i+80, cardSize*j+20);
+            CardSprite *card = CardSprite::createCardSprite(0, cellSize, cellSize, getPosition(i, j));
             cardArr[i][j] = card;
             addChild(card);
         }
@@ -173,7 +176,7 @@ void GameScene::createCardSprite(Size size)
 }
 
 //创建生成随机卡片
-void GameScene::createCardNumber()
+void GameScene::createCardNumber(bool animation)
 {
 
     while (1) {
@@ -186,6 +189,10 @@ void GameScene::createCardNumber()
         {
             //2和4的生成率为9:1
             cardArr[i][j]->setNumber(CCRANDOM_0_1()*10 < 1 ? 4 : 2);
+            if(animation)
+            {
+                cardArr[i][j]->runNewNumberAction();
+            }
             break;
         }
         
@@ -445,19 +452,9 @@ void GameScene::doCheck()
     
 }
 
-void GameScene::newNumber(int i, int j, int num)
-{
-    auto cell = Sprite::create();
-    cell->setPosition(getPosition(i, j));
-    
-    auto label = Label::createWithSystemFont("2", "Consolas", 70);
-    cell->addChild(label);
-    
-}
-
 Point GameScene::getPosition(int i, int j)
 {
-    float pX = cellSize/2 + i*(cellSize+cellSpace);
+    float pX = 20 + cellSpace/2 + i*(cellSize+cellSpace);
     float pY = cellSize/2 + j*(cellSize+cellSpace);
     
     return Point(pX,pY);

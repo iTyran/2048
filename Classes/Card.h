@@ -14,14 +14,15 @@
 class CardSprite : public cocos2d::Sprite
 {
 public:
-    static CardSprite* createCardSprite(int number, int wight, int height, float CardSpriteX, float CardSpriteY);
+    static CardSprite* createCardSprite(int number, int wight, int height,cocos2d::Point position);
 	virtual bool init();
 	CREATE_FUNC(CardSprite);
     ~CardSprite();
     int getNumber();
     void setNumber(int num);
+    void runNewNumberAction();
 private:
-    void initCard(int number, int wight, int height, float CardSpriteX, float CardSpriteY);
+    void initCard(int number, int wight, int height, cocos2d::Point position);
 private:
     //显示数字
     int number;

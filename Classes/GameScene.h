@@ -34,7 +34,7 @@ public:
 private:
     
     void createCardSprite(cocos2d::Size size);
-    void createCardNumber();
+    void createCardNumber(bool animation = true);
     void newNumber(int i, int j, int num);
     void setScore(int score);
     void doCheck();
@@ -64,7 +64,7 @@ private:
 private:
 
     //定义cellSize/cellSpace
-    int cellSize = 100;
+    int cellSize = 0;
     int cellSpace = 10;
     //分数
     int score;
