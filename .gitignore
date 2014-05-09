@@ -10,3 +10,8 @@ project.xcworkspace
 xcuserdata
 proj.android/libs/
 proj.android/obj/
+proj.android/assets/
+bin/
+gen/
+local.properties
+cocos2d/
