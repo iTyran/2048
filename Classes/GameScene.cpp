@@ -100,27 +100,27 @@ bool GameScene::init()
 void GameScene::onPause(Ref* pSender)
 {
     PopLayer *poplayer = PopLayer::create(Color4B(0,0,0,180));
-    addChild(poplayer);
+    getParent()->addChild(poplayer);
     Director::getInstance()->pause();
 }
 
 bool GameScene::onTouchBegan(Touch* touch, Event* event)
 {
-	Point beginTouch = touch->getLocation();    
-    recognizer->beginPoint(beginTouch.x, beginTouch.y);
+	Point beginPoint = touch->getLocation();
+    recognizer->beginPoint(beginPoint);
     return true;
 }
 
 void GameScene::onTouchMoved(Touch* touch, Event* event)
 {
     Point pos = touch->getLocation();
-    recognizer->movePoint(pos.x, pos.y);
+    recognizer->movePoint(pos);
 }
 
 void GameScene::onTouchEnded(Touch* touch, Event* event)
 {
-    
-    SimpleGestures rtn = recognizer->endPoint();
+    Point pos = touch->getLocation();
+    SimpleGestures rtn = recognizer->endPoint(pos);
     
     switch (rtn) {
         case SimpleGesturesLeft:
@@ -416,7 +416,7 @@ void GameScene::doCheck()
         gameOverTitle->setPosition(centerPos);
         successLayer->addChild(gameOverTitle);
         
-        addChild(successLayer,1);
+        getParent()->addChild(successLayer,1);
         
         scheduleOnce(SEL_SCHEDULE(&GameScene::removeSuccessLayer), 2);
         return;
@@ -430,7 +430,7 @@ void GameScene::doCheck()
 
         HighScore::getInstance()->setScore(score);
         GameOverLayer *gameoverLayer = GameOverLayer::create(Color4B(0, 0, 0, 180));
-        addChild(gameoverLayer,1);
+        getParent()->addChild(gameoverLayer,1);
         
         Director::getInstance()->pause();
     }

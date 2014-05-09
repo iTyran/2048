@@ -19,26 +19,31 @@ SimpleRecognizer::SimpleRecognizer()
 }
 
 // be called in onTouchBegan
-void SimpleRecognizer::beginPoint(double x, double y)
+void SimpleRecognizer::beginPoint(cocos2d::Point point)
 {
 	this->result = SimpleGesturesError;
     points.clear();
-	points.push_back(Point(x,y));
+	points.push_back(point);
 }
 
-void SimpleRecognizer::movePoint(double x, double y)
+void SimpleRecognizer::movePoint(cocos2d::Point point)
 {
-	points.push_back(Point(x, y));
-    
-	if (result == SimpleGesturesNotSupport) {
-		return;
+	points.push_back(point);
+}
+
+SimpleGestures SimpleRecognizer::endPoint(cocos2d::Point point)
+{
+    points.push_back(point);
+
+	if (this->points.size() < 3) {
+		return SimpleGesturesError;
 	}
     
 	SimpleGestures newRtn = SimpleGesturesError;
 	int len = this->points.size();
 	//每当触点移动时,在当前触点和之前触点之间计算不同的x坐标和y坐标
-	double dx = this->points[len - 1].x - this->points[len - 2].x;
-	double dy = this->points[len - 1].y - this->points[len - 2].y;
+	double dx = this->points[len - 1].x - this->points[0].x;
+	double dy = this->points[len - 1].y - this->points[0].y;
     
 	if (abs(dx) > abs(dy)) {
 		//在这种情况下,运动趋势的触点在x轴方向
@@ -59,19 +64,11 @@ void SimpleRecognizer::movePoint(double x, double y)
 	// first set result
 	if (result == SimpleGesturesError) {
 		result = newRtn;
-		return;
 	}
     
 	// if diretcory change, not support Recongnizer
 	if (result != newRtn) {
 		result = SimpleGesturesNotSupport;
-	}
-}
-
-SimpleGestures SimpleRecognizer::endPoint()
-{
-	if (this->points.size() < 1) {
-		return SimpleGesturesError;
 	}
 	return result;
 }

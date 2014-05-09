@@ -35,9 +35,9 @@ protected:
 public:
 	SimpleRecognizer();
     
-	void beginPoint(double x, double y);
-	void movePoint(double x, double y);
-	SimpleGestures endPoint();
+	void beginPoint(cocos2d::Point point);
+	void movePoint(cocos2d::Point point);
+	SimpleGestures endPoint(cocos2d::Point point);
     
     std::vector<cocos2d::Point>& getPoints();
     
